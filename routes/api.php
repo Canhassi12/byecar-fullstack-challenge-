@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/integrations/{company}', [IntegrationsController::class, 'find'])->name('integrations.find');
+Route::middleware('integration.token')
+    ->get('/integrations/{company}', [IntegrationsController::class, 'find'])->name('integrations.find');

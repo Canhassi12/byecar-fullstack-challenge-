@@ -17,16 +17,6 @@ class IntegrationsController extends Controller
 
     public function find(Request $request, $company) 
     {
-        $tokenFoda = 'he4rtDevs1337';
-
-        if(!$request->hasHeader('token')) {
-            return response()->json(['message' => 'you need a token to access'], Response::HTTP_UNAUTHORIZED);
-        }
-
-        if($request->header('token') != $tokenFoda) {
-            return response()->json(['message' => 'that token are invalid'], Response::HTTP_UNAUTHORIZED);
-        }
-
         return $this->client->findById(2);
     } 
 }

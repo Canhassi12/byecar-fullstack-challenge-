@@ -35,7 +35,7 @@ class IntegrationControllerTest extends TestCase
     public function test_user_can_retrieve_data_with_a_valid_token() {
         $response = $this->get(
             route('integrations.find', ['company' => 'localiza']),
-            ['token' => 'he4rtDevs1337']
+            ['token' => env('INTEGRATIONS_TOKEN')]
         );
 
         $response->assertStatus(Response::HTTP_OK)
