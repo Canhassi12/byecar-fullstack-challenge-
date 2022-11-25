@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 
 class LocalizaClient implements IntegrationClientInterface
 {
-    
     public function __construct()
     {
         $this->client = new Client([
@@ -16,10 +15,14 @@ class LocalizaClient implements IntegrationClientInterface
 
     public function findById(int $id): array
     {
+        $response = $this->client->get('/users');
+
+        $users = json_decode($response->getBody(), true);
+        
         return [
-            'name' => 'Joaozinho',
-            'email' => 'joaozinho@gmail.com',
-            'phone' => '+551140028922'
+            "name"  => $users[$id]['name'],
+            "email" => $users[$id]['email'],
+            "phone" => $users[$id]['phone']
         ];
     }
 }

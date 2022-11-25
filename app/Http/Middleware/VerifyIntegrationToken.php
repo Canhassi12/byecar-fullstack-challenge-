@@ -21,7 +21,7 @@ class VerifyIntegrationToken
             return response()->json(['message' => 'you need a token to access'], Response::HTTP_UNAUTHORIZED);
         }
 
-        if($request->header('token') != env('INTEGRATIONS_TOKEN')) {
+        if($request->header('token') != config('integrations.token')) {
             return response()->json(['message' => 'that token are invalid'], Response::HTTP_UNAUTHORIZED);
         }
 

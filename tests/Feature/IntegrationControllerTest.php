@@ -35,14 +35,14 @@ class IntegrationControllerTest extends TestCase
     public function test_user_can_retrieve_data_with_a_valid_token() {
         $response = $this->get(
             route('integrations.find', ['company' => 'localiza']),
-            ['token' => env('INTEGRATIONS_TOKEN')]
+            ['token' => config('integrations.token')]
         );
 
         $response->assertStatus(Response::HTTP_OK)
-            ->assertJson([
-                'name' => 'Joaozinho',
-                'email' => 'joaozinho@gmail.com',
-                'phone' => '+551140028922'
+            ->assertJsonStructure([
+                'name',
+                'email',
+                'phone'
             ]);
     }
 
