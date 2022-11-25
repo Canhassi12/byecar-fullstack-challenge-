@@ -11,7 +11,12 @@ class IntegrationControllerTest extends TestCase
 {
     public function test_user_should_not_retrieve_data_without_token()
     {
-        $response = $this->get(route('integrations.find', ['company' => 'localiza']));
+        $query = [
+            'company' => 'localiza',
+            'id'      => 4,
+        ];
+
+        $response = $this->get(route('integrations.find', $query));
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJson([
@@ -21,8 +26,13 @@ class IntegrationControllerTest extends TestCase
 
     public function test_user_should_not_retrieve_data_invalid_token()
     {
+        $query = [
+            'company' => 'localiza',
+            'id'      => 4,
+        ];
+
         $response = $this->get(
-            route('integrations.find', ['company' => 'localiza']),
+            route('integrations.find', $query),
             ['token' => 'InvalidToken']
         );
 
@@ -33,8 +43,14 @@ class IntegrationControllerTest extends TestCase
     }
 
     public function test_user_can_retrieve_data_with_a_valid_token_and_localiza_company() {
+        
+        $query = [
+            'company' => 'localiza',
+            'id'      => 4,
+        ];
+        
         $response = $this->get(
-            route('integrations.find', ['company' => 'localiza']),
+            route('integrations.find', $query),
             ['token' => config('integrations.token')]
         );
 
@@ -47,8 +63,14 @@ class IntegrationControllerTest extends TestCase
     }
 
     public function test_user_can_retrieve_data_with_a_valid_token_and_movida_company() {
+        
+        $query = [
+            'company' => 'movida',
+            'id'      => 1,
+        ];
+
         $response = $this->get(
-            route('integrations.find', ['company' => 'movida']),
+            route('integrations.find', $query),
             ['token' => config('integrations.token')]
         );
 

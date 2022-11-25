@@ -8,11 +8,11 @@ use App\Clients\Integrations\MovidaClient;
 
 class FindIntegration {
 
-    public function handle(string $company): array
+    public function handle(string $company, int $id): array
     {
         $client = $this->getClient($company);
 
-        $user = $client->findById(1);
+        $user = $client->findById($id);
 
         return $user;
     }
