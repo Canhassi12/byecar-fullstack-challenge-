@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Clients\Integrations\LocalizaClient;
+use App\Services\FindIntegration;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class IntegrationsController extends Controller
 {
-    private LocalizaClient $client;
-
-    public function __construct(LocalizaClient $client)
+    public function find(Request $request, string $company, FindIntegration $action): JsonResponse
     {
-        $this->client = $client;
-    }
-
-    public function find(Request $request, $company) 
-    {
-        return $this->client->findById(2);
+        return response()->json($action->handle($company));
     } 
 }

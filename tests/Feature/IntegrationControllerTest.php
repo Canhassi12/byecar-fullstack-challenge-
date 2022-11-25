@@ -32,9 +32,23 @@ class IntegrationControllerTest extends TestCase
             ]);
     }
 
-    public function test_user_can_retrieve_data_with_a_valid_token() {
+    public function test_user_can_retrieve_data_with_a_valid_token_and_localiza_company() {
         $response = $this->get(
             route('integrations.find', ['company' => 'localiza']),
+            ['token' => config('integrations.token')]
+        );
+
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                'name',
+                'email',
+                'phone'
+            ]);
+    }
+
+    public function test_user_can_retrieve_data_with_a_valid_token_and_movida_company() {
+        $response = $this->get(
+            route('integrations.find', ['company' => 'movida']),
             ['token' => config('integrations.token')]
         );
 
