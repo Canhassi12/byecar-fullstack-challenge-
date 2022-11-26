@@ -21,16 +21,10 @@ class FindIntegration {
 
     private function getClient($company): IntegrationClientInterface
     {
-        $client = match($company) {
+        return match($company) {
             'movida'   => new MovidaClient,
             'localiza' => new LocalizaClient,
-            default => null
+            default => throw InvalidClientException::invalidName()
         };  
-        
-        if(!$client instanceof (IntegrationClientInterface::class)) {
-            throw InvalidClientException::invalidName();
-        }
-
-        return $client;
-    }
+    }        
 }
