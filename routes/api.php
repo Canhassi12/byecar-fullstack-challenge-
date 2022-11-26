@@ -15,5 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('integration.token')
-    ->get('/integrations/{company}/users/{id}', [IntegrationsController::class, 'find'])->name('integrations.find');
+Route::get('/integrations/{company}', [IntegrationsController::class, 'find'])->name('integrations.find');
