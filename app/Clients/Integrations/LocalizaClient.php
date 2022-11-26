@@ -2,6 +2,7 @@
 
 namespace App\Clients\Integrations;
 
+use App\Exceptions\InvalidClientIdException;
 use GuzzleHttp\Client;
 
 class LocalizaClient implements IntegrationClientInterface
@@ -18,6 +19,10 @@ class LocalizaClient implements IntegrationClientInterface
         $response = $this->client->get('/users');
 
         $users = json_decode($response->getBody(), true);
+
+        if(empty($users[$id])) {
+            throw InvalidClientIdException::invalidId();
+        }
         
         return [
             "name"  => $users[$id]['name'],
