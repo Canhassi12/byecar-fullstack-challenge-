@@ -1,66 +1,47 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Desafio API de Integração 
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Problema
 
-## About Laravel
+Temos uma jornada de compra do nosso produto. Essa jornada possui 4 telas e uma aplicação no frontend foi construída para este processo. 
+Na primeira tela, o front recupera informações de APIs externas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Ao realizar uma integração com um parceiro, descobrimos que precisamos buscar informações em uma nova API, que vai retornar os 
+dados do cliente do nosso parceiro, **então na primeira tela** da nossa jornada vamos receber um token do parceiro que vai nos dar acesso ao dados do cliente dele.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* O front precisa recuperar o token que chega via GET na URL. Parâmetro `token`;
+* O backend vai receber o token do front e se comunicar com a API do parceiro para recuperar os registro do cliente;
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Considerando as informações acima, descreva como seria a comunicação entre frontend > backend > API > backend > frontend;
+2. Implemente uma classe que faz a recuperação do token chegando do front e consumindo uma API (fake).
+   - A API só retorna dados dos clientes mediante o envio do token no cabeçalho;
+   - A classe deve utilizar a estrutura de um projeto Laravel (controllers, services, etc);
+   - O Laravel deve devolver dados cadastrais (nome, email, celular) para o front em formato json.
 
-## Learning Laravel
+## Resolução do Problema
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+O problema tem maior foco em integrar com o parceiro, então temos verificação de token para consumimos a API do do mesmo. Implementei também o segundo conceito de **SOLID** - `'Open-Closed Principle'`. Com o ponto de vista que se precisamos integrar com um parceiro, futuramente poderiamos ter outras integrações, o que facilitaria em novas features. Sendo assim temos integrações de dois parceiros para testar as funcionalidades. Utilizei a API https://jsonplaceholder.typicode.com/users, e a consumi com a Lib [Guzzle](https://docs.guzzlephp.org/en/stable/) para ter uma melhor manipulação dos dados dos usuarios.
+Feito isso é retornado os devidos dados em formato `JSON`.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Testes
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Utilizei TDD para construir a aplicação, imaginando os cenarios necessarios para cada etapa tanto com cenarios positivos e os negativos. E tratamento de erros com **`Exceptions`** personalizadas.
 
-## Laravel Sponsors
+## Como rodar o projeto
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```
+1 - git clone https://github.com/Canhassi12/integrations-tests-laravel.git
+2 - composer install
+3 - Renomear .env.example para .env
+```
 
-### Premium Partners
+## Como rodar os testes
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Utilizei a lib PHPUnit ja presente no Laravel.
 
-## Contributing
+```
+$ php artisan test
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Referências
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[Laravel doc](https://laravel.com/docs/9.x) <br> [PHP doc](https://www.php.net) <br> [Guzzle](https://docs.guzzlephp.org/en/stable/)  
