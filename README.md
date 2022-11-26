@@ -32,6 +32,7 @@ Utilizei TDD para construir a aplicação, imaginando os cenarios necessarios pa
 1 - git clone https://github.com/Canhassi12/integrations-tests-laravel.git
 2 - composer install
 3 - Renomear .env.example para .env
+4 - Passar um valor
 ```
 
 ## Como rodar os testes
